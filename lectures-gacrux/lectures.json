@@ -1,0 +1,706 @@
+[
+  {
+    "n": "001",
+    "texte": "bonjour"
+  },
+  {
+    "n": "002",
+    "texte": "merci"
+  },
+  {
+    "n": "003",
+    "texte": "au revoir"
+  },
+  {
+    "n": "004",
+    "texte": "s'il vous plaît"
+  },
+  {
+    "n": "005",
+    "texte": "excusez-moi"
+  },
+  {
+    "n": "006",
+    "texte": "je m'appelle"
+  },
+  {
+    "n": "007",
+    "texte": "mercredi"
+  },
+  {
+    "n": "008",
+    "texte": "dimanche"
+  },
+  {
+    "n": "009",
+    "texte": "vendredi"
+  },
+  {
+    "n": "010",
+    "texte": "lundi"
+  },
+  {
+    "n": "011",
+    "texte": "samedi"
+  },
+  {
+    "n": "012",
+    "texte": "mars"
+  },
+  {
+    "n": "013",
+    "texte": "septembre"
+  },
+  {
+    "n": "014",
+    "texte": "janvier"
+  },
+  {
+    "n": "015",
+    "texte": "décembre"
+  },
+  {
+    "n": "016",
+    "texte": "avril"
+  },
+  {
+    "n": "017",
+    "texte": "quinze"
+  },
+  {
+    "n": "018",
+    "texte": "trente"
+  },
+  {
+    "n": "019",
+    "texte": "soixante-dix"
+  },
+  {
+    "n": "020",
+    "texte": "quatre-vingt-dix"
+  },
+  {
+    "n": "021",
+    "texte": "cinquante"
+  },
+  {
+    "n": "022",
+    "texte": "Il pleut, prends ton parapluie."
+  },
+  {
+    "n": "023",
+    "texte": "Le magasin ferme à dix-neuf heures, sauf le dimanche où il reste fermé toute la journée."
+  },
+  {
+    "n": "024",
+    "texte": "Un café et un croissant."
+  },
+  {
+    "n": "025",
+    "texte": "Peux-tu fermer la fenêtre, s'il te plaît, il commence à faire froid dans la pièce ?"
+  },
+  {
+    "n": "026",
+    "texte": "Rendez-vous mardi à dix heures."
+  },
+  {
+    "n": "027",
+    "texte": "Nous partons en vacances la semaine prochaine, nous avons réservé un hôtel près de la mer."
+  },
+  {
+    "n": "028",
+    "texte": "Où est la gare ?"
+  },
+  {
+    "n": "029",
+    "texte": "Le film commence à vingt heures trente, il faut arriver au moins un quart d'heure avant."
+  },
+  {
+    "n": "030",
+    "texte": "Bonsoir, une table pour deux personnes, s'il vous plaît."
+  },
+  {
+    "n": "031",
+    "texte": "Voici la carte."
+  },
+  {
+    "n": "032",
+    "texte": "Comme boisson, je vais prendre une carafe d'eau, s'il vous plaît."
+  },
+  {
+    "n": "033",
+    "texte": "Je voudrais le plat du jour."
+  },
+  {
+    "n": "034",
+    "texte": "Excusez-moi, il manque une fourchette sur la table."
+  },
+  {
+    "n": "035",
+    "texte": "Encore un peu de pain."
+  },
+  {
+    "n": "036",
+    "texte": "L'addition, s'il vous plaît. Est-ce que vous prenez la carte ?"
+  },
+  {
+    "n": "037",
+    "texte": "C'était très bon, merci."
+  },
+  {
+    "n": "038",
+    "texte": "Sortez vos cahiers et ouvrez le livre à la page vingt-trois."
+  },
+  {
+    "n": "039",
+    "texte": "Le contrôle est vendredi matin."
+  },
+  {
+    "n": "040",
+    "texte": "N'oubliez pas de rendre le devoir avant lundi prochain."
+  },
+  {
+    "n": "041",
+    "texte": "Ce matin j'ai eu deux heures de maths, et cet après-midi du sport."
+  },
+  {
+    "n": "042",
+    "texte": "J'ai passé une bonne journée."
+  },
+  {
+    "n": "043",
+    "texte": "Bonjour, je voudrais prendre rendez-vous avec le docteur, si possible cette semaine."
+  },
+  {
+    "n": "044",
+    "texte": "Je voudrais un rendez-vous."
+  },
+  {
+    "n": "045",
+    "texte": "J'ai mal à la gorge et je tousse depuis trois jours."
+  },
+  {
+    "n": "046",
+    "texte": "Reposez-vous bien et revenez me voir si ça ne va pas mieux dans une semaine."
+  },
+  {
+    "n": "047",
+    "texte": "Un comprimé matin et soir."
+  },
+  {
+    "n": "048",
+    "texte": "Je voudrais un kilo de pommes et une salade, s'il vous plaît."
+  },
+  {
+    "n": "049",
+    "texte": "Une baguette et six œufs."
+  },
+  {
+    "n": "050",
+    "texte": "Ça fait douze euros cinquante, s'il vous plaît."
+  },
+  {
+    "n": "051",
+    "texte": "Vous payez en espèces ou par carte ?"
+  },
+  {
+    "n": "052",
+    "texte": "Je paie par carte, merci beaucoup."
+  },
+  {
+    "n": "053",
+    "texte": "Bonjour, je m'appelle Sofia, je cherche un travail à temps partiel."
+  },
+  {
+    "n": "054",
+    "texte": "Je suis disponible en septembre."
+  },
+  {
+    "n": "055",
+    "texte": "Bonjour, pourrais-je parler à madame Martin, s'il vous plaît ?"
+  },
+  {
+    "n": "056",
+    "texte": "Pouvez-vous me rappeler cet après-midi ?"
+  },
+  {
+    "n": "057",
+    "texte": "Je vous remercie beaucoup."
+  },
+  {
+    "n": "058",
+    "texte": "Excusez-moi, où se trouve la gare, s'il vous plaît ?"
+  },
+  {
+    "n": "059",
+    "texte": "Tout droit, puis à gauche."
+  },
+  {
+    "n": "060",
+    "texte": "Un aller-retour pour Lyon, en deuxième classe, s'il vous plaît."
+  },
+  {
+    "n": "061",
+    "texte": "Le train part quai trois."
+  },
+  {
+    "n": "062",
+    "texte": "Le train de quatorze heures a vingt minutes de retard."
+  },
+  {
+    "n": "063",
+    "texte": "J'ai raté ma correspondance."
+  },
+  {
+    "n": "064",
+    "texte": "L'appartement fait cinquante mètres carrés, avec deux chambres."
+  },
+  {
+    "n": "065",
+    "texte": "Le loyer coûte six cents euros."
+  },
+  {
+    "n": "066",
+    "texte": "La salle de bains est au fond du couloir, à droite."
+  },
+  {
+    "n": "067",
+    "texte": "Bonjour, le chauffage ne marche plus depuis hier soir."
+  },
+  {
+    "n": "068",
+    "texte": "Pouvez-vous envoyer quelqu'un pour réparer ?"
+  },
+  {
+    "n": "069",
+    "texte": "Je voudrais une chambre pour deux nuits, du vendredi au dimanche."
+  },
+  {
+    "n": "070",
+    "texte": "J'ai une réservation."
+  },
+  {
+    "n": "071",
+    "texte": "N'oublie pas ton passeport et ta brosse à dents."
+  },
+  {
+    "n": "072",
+    "texte": "Ma valise est trop lourde."
+  },
+  {
+    "n": "073",
+    "texte": "C'était magnifique, on a visité un vieux village et mangé des glaces."
+  },
+  {
+    "n": "074",
+    "texte": "Nous avons passé des vacances formidables."
+  },
+  {
+    "n": "075",
+    "texte": "Il fait froid, mets ton manteau et ton écharpe."
+  },
+  {
+    "n": "076",
+    "texte": "Je cherche une veste chaude."
+  },
+  {
+    "n": "077",
+    "texte": "Est-ce que vous avez ce pull en taille moyenne ?"
+  },
+  {
+    "n": "078",
+    "texte": "Ce pull me plaît beaucoup."
+  },
+  {
+    "n": "079",
+    "texte": "Bonjour, je voudrais échanger cette chemise, elle est trop petite."
+  },
+  {
+    "n": "080",
+    "texte": "Je voudrais une taille plus grande."
+  },
+  {
+    "n": "081",
+    "texte": "Bonjour, je voudrais ouvrir un compte, s'il vous plaît."
+  },
+  {
+    "n": "082",
+    "texte": "Je voudrais voir mon compte."
+  },
+  {
+    "n": "083",
+    "texte": "Le paiement a été refusé, votre carte est peut-être expirée."
+  },
+  {
+    "n": "084",
+    "texte": "Le paiement a été refusé."
+  },
+  {
+    "n": "085",
+    "texte": "J'essaie de mettre cinquante euros de côté chaque mois."
+  },
+  {
+    "n": "086",
+    "texte": "Je préfère économiser pour les vacances."
+  },
+  {
+    "n": "087",
+    "texte": "Il me faut des œufs, de la farine et du lait pour les crêpes."
+  },
+  {
+    "n": "088",
+    "texte": "Il faut de la farine."
+  },
+  {
+    "n": "089",
+    "texte": "Mélangez bien, puis laissez reposer une heure au frais."
+  },
+  {
+    "n": "090",
+    "texte": "Laissez cuire pendant vingt minutes."
+  },
+  {
+    "n": "091",
+    "texte": "Tu veux venir dîner à la maison samedi soir ?"
+  },
+  {
+    "n": "092",
+    "texte": "Je viendrai avec plaisir."
+  },
+  {
+    "n": "093",
+    "texte": "Je joue au football tous les mercredis après l'école."
+  },
+  {
+    "n": "094",
+    "texte": "J'aime beaucoup courir le matin."
+  },
+  {
+    "n": "095",
+    "texte": "On se retrouve devant le cinéma à huit heures moins le quart ?"
+  },
+  {
+    "n": "096",
+    "texte": "Rendez-vous devant le cinéma."
+  },
+  {
+    "n": "097",
+    "texte": "Je déteste me lever tôt, mais j'adore les week-ends."
+  },
+  {
+    "n": "098",
+    "texte": "Mon loisir préféré, c'est la lecture."
+  },
+  {
+    "n": "099",
+    "texte": "Aujourd'hui il fait beau, mais il va pleuvoir cet après-midi."
+  },
+  {
+    "n": "100",
+    "texte": "Il fait très chaud aujourd'hui."
+  },
+  {
+    "n": "101",
+    "texte": "En hiver, il neige souvent à la montagne."
+  },
+  {
+    "n": "102",
+    "texte": "En été, les journées sont longues."
+  },
+  {
+    "n": "103",
+    "texte": "Prends un parapluie, la pluie est annoncée pour ce soir."
+  },
+  {
+    "n": "104",
+    "texte": "Il va pleuvoir demain."
+  },
+  {
+    "n": "105",
+    "texte": "ma grand-mère"
+  },
+  {
+    "n": "106",
+    "texte": "J'ai un petit frère."
+  },
+  {
+    "n": "107",
+    "texte": "mon anniversaire"
+  },
+  {
+    "n": "108",
+    "texte": "Ma mère a quarante ans."
+  },
+  {
+    "n": "109",
+    "texte": "toute la famille"
+  },
+  {
+    "n": "110",
+    "texte": "On mange chez mamie dimanche."
+  },
+  {
+    "n": "111",
+    "texte": "enchantée"
+  },
+  {
+    "n": "112",
+    "texte": "On peut être amies."
+  },
+  {
+    "n": "113",
+    "texte": "on y va ensemble"
+  },
+  {
+    "n": "114",
+    "texte": "Tu viens chez moi demain ?"
+  },
+  {
+    "n": "115",
+    "texte": "ce n'est pas grave"
+  },
+  {
+    "n": "116",
+    "texte": "Je suis désolée pour hier."
+  },
+  {
+    "n": "117",
+    "texte": "je te rappelle"
+  },
+  {
+    "n": "118",
+    "texte": "Mon téléphone est éteint."
+  },
+  {
+    "n": "119",
+    "texte": "je t'envoie un message"
+  },
+  {
+    "n": "120",
+    "texte": "Je t'écris ce soir."
+  },
+  {
+    "n": "121",
+    "texte": "c'est privé"
+  },
+  {
+    "n": "122",
+    "texte": "Je n'ouvre pas ce lien."
+  },
+  {
+    "n": "123",
+    "texte": "une feuille blanche"
+  },
+  {
+    "n": "124",
+    "texte": "Je dessine tous les soirs."
+  },
+  {
+    "n": "125",
+    "texte": "un joli dessin"
+  },
+  {
+    "n": "126",
+    "texte": "Le ciel est bleu clair."
+  },
+  {
+    "n": "127",
+    "texte": "ma chanson préférée"
+  },
+  {
+    "n": "128",
+    "texte": "Je joue de la guitare."
+  },
+  {
+    "n": "129",
+    "texte": "mon chien"
+  },
+  {
+    "n": "130",
+    "texte": "Le chat dort sur le lit."
+  },
+  {
+    "n": "131",
+    "texte": "les vaches"
+  },
+  {
+    "n": "132",
+    "texte": "Les oiseaux chantent le matin."
+  },
+  {
+    "n": "133",
+    "texte": "il a faim"
+  },
+  {
+    "n": "134",
+    "texte": "Je donne à boire au chat."
+  },
+  {
+    "n": "135",
+    "texte": "les épaules"
+  },
+  {
+    "n": "136",
+    "texte": "J'ai mal au dos."
+  },
+  {
+    "n": "137",
+    "texte": "j'ai chaud"
+  },
+  {
+    "n": "138",
+    "texte": "Je suis très fatiguée."
+  },
+  {
+    "n": "139",
+    "texte": "les cheveux bouclés"
+  },
+  {
+    "n": "140",
+    "texte": "Elle a les yeux verts."
+  },
+  {
+    "n": "141",
+    "texte": "la place du marché"
+  },
+  {
+    "n": "142",
+    "texte": "La poste est en face."
+  },
+  {
+    "n": "143",
+    "texte": "c'est ouvert"
+  },
+  {
+    "n": "144",
+    "texte": "Où est la bibliothèque ?"
+  },
+  {
+    "n": "145",
+    "texte": "un guichet"
+  },
+  {
+    "n": "146",
+    "texte": "Je remplis ce papier."
+  },
+  {
+    "n": "147",
+    "texte": "sept heures du matin"
+  },
+  {
+    "n": "148",
+    "texte": "Il est trois heures."
+  },
+  {
+    "n": "149",
+    "texte": "cet après-midi"
+  },
+  {
+    "n": "150",
+    "texte": "Je me couche à neuf heures."
+  },
+  {
+    "n": "151",
+    "texte": "dépêche-toi"
+  },
+  {
+    "n": "152",
+    "texte": "On part dans cinq minutes."
+  },
+  {
+    "n": "153",
+    "texte": "une forêt"
+  },
+  {
+    "n": "154",
+    "texte": "Les fleurs poussent au printemps."
+  },
+  {
+    "n": "155",
+    "texte": "au bord du lac"
+  },
+  {
+    "n": "156",
+    "texte": "La neige couvre le sommet."
+  },
+  {
+    "n": "157",
+    "texte": "protéger la nature"
+  },
+  {
+    "n": "158",
+    "texte": "Je ferme le robinet."
+  },
+  {
+    "n": "159",
+    "texte": "bonne année"
+  },
+  {
+    "n": "160",
+    "texte": "Nous fêtons Noël en famille."
+  },
+  {
+    "n": "161",
+    "texte": "joyeux anniversaire"
+  },
+  {
+    "n": "162",
+    "texte": "Tu viens à ma fête ?"
+  },
+  {
+    "n": "163",
+    "texte": "ça me fait plaisir"
+  },
+  {
+    "n": "164",
+    "texte": "Merci pour ce cadeau."
+  },
+  {
+    "n": "165",
+    "texte": "je suis fatiguée"
+  },
+  {
+    "n": "166",
+    "texte": "Je suis contente aujourd'hui."
+  },
+  {
+    "n": "167",
+    "texte": "ça va aller"
+  },
+  {
+    "n": "168",
+    "texte": "Tu peux compter sur moi."
+  },
+  {
+    "n": "169",
+    "texte": "j'ai besoin d'aide"
+  },
+  {
+    "n": "170",
+    "texte": "Je préfère en parler demain."
+  },
+  {
+    "n": "171",
+    "texte": "un ordinateur"
+  },
+  {
+    "n": "172",
+    "texte": "Mon ordinateur est lent."
+  },
+  {
+    "n": "173",
+    "texte": "j'ai tout enregistré"
+  },
+  {
+    "n": "174",
+    "texte": "Je cherche une image."
+  },
+  {
+    "n": "175",
+    "texte": "fais attention"
+  },
+  {
+    "n": "176",
+    "texte": "Je demande à un adulte."
+  }
+]
