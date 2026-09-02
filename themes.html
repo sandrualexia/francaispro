@@ -82,6 +82,38 @@ figcaption h2{font-family:"Playfair Display",Georgia,serif;font-weight:800;font-
 .note{color:#5c5346;font-size:14px;line-height:1.5;margin-top:8px}
 .pastilles{margin-top:11px;display:flex;gap:7px;justify-content:center}
 .pa{width:19px;height:19px;border-radius:50%;border:1px solid rgba(0,0,0,.12);display:inline-block}
+
+.vitrine{max-width:760px;margin:0 auto 54px;text-align:center}
+.onglets{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:26px}
+.onglet{font-family:"PT Serif",Georgia,serif;font-size:15px;cursor:pointer;
+        background:#fff;color:#5c5346;border:1px solid #ded7cc;border-radius:999px;
+        padding:9px 17px;transition:all .18s}
+.onglet:hover{border-color:#b9ae9e}
+.onglet.actif{background:#2c2419;color:#fdfbf7;border-color:#2c2419}
+.grand{position:relative;width:min(330px,86vw);aspect-ratio:9/16;margin:0 auto;
+       border-radius:34px;overflow:hidden;border:1px solid var(--line);
+       box-shadow:0 20px 46px rgba(40,30,20,.18);transition:box-shadow .3s}
+.grand .fond{transition:background .45s ease}
+.grand .d{font-size:34px;transition:opacity .3s}
+.grand .d2{font-size:27px}.grand .d3{font-size:31px}
+.grand .d4{font-size:33px}.grand .d5{font-size:22px}
+.grand .dedans{padding:18px 16px 14px}
+.grand .haut{font-size:13px}
+.grand .logo{font-size:40px;margin:18px 0 16px;transition:color .35s}
+.grand .carte{padding:16px 15px;border-radius:19px}
+.grand .kick{font-size:11px;margin-bottom:9px}
+.grand .quest{font-size:19px;margin-bottom:14px}
+.grand .opt{font-size:14px;padding:10px 11px;margin-bottom:8px;border-radius:13px}
+.grand .opt i{flex:0 0 24px;height:24px;font-size:11px}
+.grand .btn{font-size:15px;padding:12px;margin-top:12px}
+.grand .pied{font-size:11px}
+.grand.nuit .d{opacity:.9}
+.legende{margin-top:22px}
+.legende h2{font-family:"Playfair Display",Georgia,serif;font-weight:800;font-size:24px}
+.legende .quand{color:#8a7f70;font-size:14px;margin-top:4px}
+.legende .note{color:#5c5346;font-size:16px;line-height:1.55;margin-top:9px}
+.sous-titre{max-width:760px;margin:0 auto 22px;text-align:center;color:#8a7f70;
+            font-size:14px;letter-spacing:.04em;text-transform:uppercase}
 .bas{max-width:760px;margin:52px auto 0;text-align:center;color:#5c5346;
      font-size:15px;line-height:1.6}
 </style>
@@ -94,18 +126,52 @@ figcaption h2{font-family:"Playfair Display",Georgia,serif;font-weight:800;font-
   <p>Rien n'est encore posé sur ton site : cette page est là pour que tu regardes
      et que tu dises oui ou non, habit par habit.</p>
   <div class="avert">
-    <b>Deux choses à savoir avant de dire oui.</b><br>
-    <b>1.</b> Sur ton site, chaque visiteur a sa propre page — si tu changes l'habit
-    sur ton téléphone, ça ne change que chez toi. Pour que tout le monde voie le bon
-    habit, c'est <b>la date qui décide</b> : l'application regarde le jour et met
-    l'habit qui correspond, toute seule. Ton bouton sert alors à essayer un habit
-    avant l'heure, ou à en forcer un.<br>
-    <b>2.</b> Ton bouton peut être caché aux élèves, mais pas à quelqu'un qui
-    fouille vraiment dans la page. Il n'y a pas de vrai coffre-fort sur un site
-    comme le tien. Ça arrête les curieux, pas un informaticien.
+    <b>Comment ça marcherait.</b><br>
+    <b>C'est la date qui décide</b> : l'application regarde le jour et met l'habit
+    qui correspond, toute seule, chez tous les élèves. Personne n'a rien à faire.<br>
+    Un habit se termine, le suivant commence — et quand aucune saison ne tombe,
+    c'est ton rose de tous les jours qui revient.<br><br>
+    <b>Le bouton, on verra après.</b> Un bouton rien que pour toi servirait à
+    essayer un habit avant l'heure. Mais il ne changerait rien pour les élèves :
+    sur ton site, chaque visiteur a sa propre page. Et il pourrait être caché aux
+    élèves, pas à quelqu'un qui fouille vraiment. Rien ne presse : les habits
+    marchent très bien sans lui.
   </div>
 </div>
 
+
+<section class="vitrine">
+  <div class="onglets"><button class="onglet actif" data-habit="toute-annee">Toute l'année</button>
+<button class="onglet" data-habit="nouvel-an">Nouvel An</button>
+<button class="onglet" data-habit="saint-valentin">Saint-Valentin</button>
+<button class="onglet" data-habit="printemps">Printemps et Pâques</button>
+<button class="onglet" data-habit="ete">Été</button>
+<button class="onglet" data-habit="automne">Automne</button>
+<button class="onglet" data-habit="noel">Noël</button></div>
+  <div class="grand " id="grand" style="--bg:#f7ede3; --bg2:#fbe8ef; --card:#fffdfa; --ink:#2c2419; --soft:#5c5346; --line:#e0d3bd; --accent:#d84f8f; --accent2:#b32268; --chip:#fbe3ee; --kicker:#c79a34">
+    <div class="fond"><span class="d d1"></span><span class="d d2"></span><span class="d d3"></span><span class="d d4"></span><span class="d d5"></span></div>
+    <div class="dedans">
+      <div class="haut"><span class="globe">🌍 Français</span><span class="gems">💎 40</span></div>
+      <div class="logo">FrançaisPro</div>
+      <div class="carte">
+        <div class="kick">VOCABULAIRE · 3/6</div>
+        <div class="quest">« Une ordonnance », c'est&nbsp;:</div>
+        <div class="opt"><i>A</i><span>Le papier du médecin pour la pharmacie</span></div>
+        <div class="opt"><i>B</i><span>Le rendez-vous suivant</span></div>
+        <div class="opt"><i>C</i><span>Le prix de la consultation</span></div>
+        <div class="btn">Valider</div>
+      </div>
+      <div class="pied">FrançaisPro — fait par Alexia</div>
+    </div>
+  </div>
+  <div class="legende">
+    <h2 id="grandNom">Toute l'année</h2>
+    <p class="quand" id="grandQuand">l'habit de tous les jours</p>
+    <p class="note" id="grandNote">Celui d'aujourd'hui. Il revient dès qu'aucune saison ne tombe.</p>
+  </div>
+</section>
+
+<p class="sous-titre">Les sept côte à côte</p>
 <div class="grille">
 
 <figure class="essai " style="
@@ -340,5 +406,130 @@ figcaption h2{font-family:"Playfair Display",Georgia,serif;font-weight:800;font-
 </figure>
 </div>
 
+
+<script>
+(function () {
+  var HABITS = {
+ "toute-annee": {
+  "nom": "Toute l'année",
+  "quand": "l'habit de tous les jours",
+  "note": "Celui d'aujourd'hui. Il revient dès qu'aucune saison ne tombe.",
+  "decor": [],
+  "nuit": false,
+  "style": "--bg:#f7ede3; --bg2:#fbe8ef; --card:#fffdfa; --ink:#2c2419; --soft:#5c5346; --line:#e0d3bd; --accent:#d84f8f; --accent2:#b32268; --chip:#fbe3ee; --kicker:#c79a34"
+ },
+ "nouvel-an": {
+  "nom": "Nouvel An",
+  "quand": "du 27 décembre au 6 janvier",
+  "note": "Nuit bleue et or, avec les feux d'artifice.",
+  "decor": [
+   "🎆",
+   "✨",
+   "🎇",
+   "🥂",
+   "✨"
+  ],
+  "nuit": true,
+  "style": "--bg:#141c33; --bg2:#26325c; --card:#1e2947; --ink:#f6f1e4; --soft:#b9c0d8; --line:#3a4772; --accent:#f2c14e; --accent2:#d9a32c; --chip:#2b3760; --kicker:#8fa4e0"
+ },
+ "saint-valentin": {
+  "nom": "Saint-Valentin",
+  "quand": "du 7 au 20 février",
+  "note": "Rose poudré, rouge, et des cœurs qui flottent.",
+  "decor": [
+   "💗",
+   "💕",
+   "❤️",
+   "💞",
+   "💗"
+  ],
+  "nuit": false,
+  "style": "--bg:#fdeef2; --bg2:#fbd9e4; --card:#fffafb; --ink:#3a1f28; --soft:#6d4a56; --line:#f3c6d5; --accent:#e0335c; --accent2:#b8153c; --chip:#fde0e8; --kicker:#d4808f"
+ },
+ "printemps": {
+  "nom": "Printemps et Pâques",
+  "quand": "du 1er mars au 31 mai",
+  "note": "Vert tendre et jaune poussin — fleurs, poussins et lapins.",
+  "decor": [
+   "🌷",
+   "🐣",
+   "🐰",
+   "🌸",
+   "🥚"
+  ],
+  "nuit": false,
+  "style": "--bg:#f1f7e7; --bg2:#fdf6dd; --card:#fdfffa; --ink:#26331d; --soft:#54654a; --line:#d3e3bd; --accent:#5aa02f; --accent2:#3f7a1c; --chip:#e6f3d8; --kicker:#d9a92c"
+ },
+ "ete": {
+  "nom": "Été",
+  "quand": "du 1er juin au 31 août",
+  "note": "Bleu de la mer et sable — vagues et glaces.",
+  "decor": [
+   "🌊",
+   "🍦",
+   "☀️",
+   "🏖️",
+   "🌊"
+  ],
+  "nuit": false,
+  "style": "--bg:#e6f4f9; --bg2:#fdf3d9; --card:#fbfeff; --ink:#10333d; --soft:#3f6572; --line:#bee0ec; --accent:#0d94bd; --accent2:#07708f; --chip:#d6eef6; --kicker:#e8a33a"
+ },
+ "automne": {
+  "nom": "Automne",
+  "quand": "du 1er septembre au 30 novembre",
+  "note": "Rouge, orange, jaune et marron — les feuilles qui tombent.",
+  "decor": [
+   "🍁",
+   "🍂",
+   "🌰",
+   "🍄",
+   "🍁"
+  ],
+  "nuit": false,
+  "style": "--bg:#fbf0e1; --bg2:#f6dcc0; --card:#fffbf5; --ink:#33210f; --soft:#6b5031; --line:#e6cba6; --accent:#c1521d; --accent2:#993c12; --chip:#f7e2c9; --kicker:#b8862a"
+ },
+ "noel": {
+  "nom": "Noël",
+  "quand": "du 1er au 26 décembre",
+  "note": "Vert sapin sur la neige — sapins, flocons et rennes.",
+  "decor": [
+   "🎄",
+   "❄️",
+   "🦌",
+   "⛄",
+   "🎁"
+  ],
+  "nuit": false,
+  "style": "--bg:#eef4ef; --bg2:#e2eee6; --card:#ffffff; --ink:#14301e; --soft:#4a6353; --line:#c9dfd0; --accent:#16743c; --accent2:#0e5429; --chip:#dcefe2; --kicker:#c0392b"
+ }
+};
+  var grand = document.getElementById("grand");
+  var nom = document.getElementById("grandNom");
+  var quand = document.getElementById("grandQuand");
+  var note = document.getElementById("grandNote");
+  var decors = grand.querySelectorAll(".d");
+
+  function poser(h) {
+    grand.setAttribute("style", h.style);
+    grand.classList.toggle("nuit", !!h.nuit);
+    for (var i = 0; i < decors.length; i++)
+      decors[i].textContent = h.decor[i] || "";
+    nom.textContent = h.nom;
+    quand.textContent = h.quand;
+    note.textContent = h.note;
+  }
+
+  var onglets = document.querySelectorAll(".onglet");
+  for (var i = 0; i < onglets.length; i++) {
+    onglets[i].addEventListener("click", function () {
+      for (var j = 0; j < onglets.length; j++) onglets[j].classList.remove("actif");
+      this.classList.add("actif");
+      poser(HABITS[this.getAttribute("data-habit")]);
+      grand.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }
+  poser(HABITS["toute-annee"]);
+})();
+</script>
 <div class="bas">Dis-moi lesquels tu gardes, et ce que tu veux changer.<br>
 Je ne touche à l'application qu'après ton feu vert.</div>
