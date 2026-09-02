@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sandrualexia.github.io/francaispro/sitemap.xml
