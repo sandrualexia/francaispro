@@ -402,6 +402,12 @@ h1 em{
   color:var(--ink-soft);
 }
 
+.outil{padding:0 0 64px}
+.outil-card{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 40px}
+.outil-card > div{flex:1 1 340px;min-width:0}
+.outil-card p{max-width:60ch}
+.outil-card .cta{font-size:18px;padding:13px 32px}
+
 /* ---------- ecrans etroits ---------- */
 
 @media (max-width:900px){
@@ -461,6 +467,19 @@ h1 em{
       <span class="tag vert">Sans connexion</span>
       <h2>Une voix enregistrée, toujours la même</h2>
       <p>Les phrases à écouter ont été lues et enregistrées une par une, pas fabriquées à la volée par l'appareil. Le même timbre pour tout le monde, et un bouton pour l'entendre plus lentement.</p>
+    </article>
+  </section>
+</div>
+
+<div class="wrap">
+  <section class="outil">
+    <article class="card outil-card">
+      <div>
+        <span class="tag">Nouveau · conjugaison</span>
+        <h2>L'atelier des onze verbes</h2>
+        <p>Apprécier, crier, oublier, peler, courir, savoir, finir, agir, voir, envoyer et falloir, à dix-huit temps. On lit la fiche, on remplit les tableaux à trous, on passe l'interro. Les fiches et les exercices s'impriment.</p>
+      </div>
+      <a class="cta" href="conjugaison.html">Ouvrir l'atelier</a>
     </article>
   </section>
 </div>

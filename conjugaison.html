@@ -1,0 +1,722 @@
+<title>Atelier conjugaison</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout : cahier à carreaux — une barre d'onglets, puis un poste de travail par mode (fiches, tableau à trous, interro). */
+:root{
+  --paper:#f4f7fb; --sheet:#ffffff; --ink:#18264a; --muted:#5b6886; --line:#d7dfec; --grid:rgba(47,91,211,.06);
+  --pen:#2f5bd3; --pen-soft:#e4ebfc; --red:#c8322a; --red-soft:#fbe6e4; --green:#1d7f47; --green-soft:#e1f3e8;
+  --amber:#a86400; --amber-soft:#fcefd9;
+  --f-display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#0f1522; --sheet:#161e2f; --ink:#e5ebf7; --muted:#9aa7c2; --line:#2a3550; --grid:rgba(125,162,255,.05);
+  --pen:#86a8ff; --pen-soft:#1f2b4a; --red:#ff7a70; --red-soft:#3a1d1f; --green:#5fd391; --green-soft:#16301f;
+  --amber:#f2b552; --amber-soft:#3a2c12; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --paper:#0f1522; --sheet:#161e2f; --ink:#e5ebf7; --muted:#9aa7c2; --line:#2a3550; --grid:rgba(125,162,255,.05);
+  --pen:#86a8ff; --pen-soft:#1f2b4a; --red:#ff7a70; --red-soft:#3a1d1f; --green:#5fd391; --green-soft:#16301f;
+  --amber:#f2b552; --amber-soft:#3a2c12; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--paper); color:var(--ink); font-family:var(--f-body); font-size:16px; line-height:1.5;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:22px 22px;}
+.wrap{max-width:1080px; margin:0 auto; padding-left:max(16px, env(safe-area-inset-left,0px)); padding-right:max(16px, env(safe-area-inset-right,0px)); padding-block:20px 60px}
+h1,h2,h3{font-family:var(--f-display); text-wrap:balance; margin:0}
+button{font:inherit; color:inherit; cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--pen); outline-offset:2px}
+
+header.top{display:flex; flex-wrap:wrap; align-items:end; justify-content:space-between; gap:12px 24px; margin-bottom:18px}
+.brand h1{font-size:clamp(1.7rem,4vw,2.4rem); font-weight:800; letter-spacing:-.02em}
+.brand h1 span{color:var(--pen)}
+.brand p{margin:2px 0 0; color:var(--muted)}
+nav.tabs{display:flex; gap:4px; background:var(--sheet); border:1px solid var(--line); border-radius:12px; padding:4px}
+nav.tabs button{border:0; background:transparent; padding:8px 14px; border-radius:9px; font-weight:700; color:var(--muted)}
+nav.tabs button[aria-selected="true"]{background:var(--pen); color:var(--sheet)}
+
+.chips{display:flex; flex-wrap:wrap; gap:6px}
+.chip{border:1.5px solid var(--line); background:var(--sheet); padding:6px 12px; border-radius:999px; font-weight:700; font-size:.95rem}
+.chip[aria-pressed="true"]{border-color:var(--pen); background:var(--pen-soft); color:var(--pen)}
+.label{font-size:.75rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:700}
+
+/* --- Apprendre --- */
+.verbhead{display:grid; grid-template-columns:1fr auto; gap:12px 20px; align-items:start; margin:20px 0 14px; background:var(--sheet); border:1px solid var(--line); border-radius:14px; padding:18px 20px}
+.verbhead h2{font-size:clamp(2rem,6vw,3rem); font-weight:800; letter-spacing:-.02em; line-height:1}
+.verbhead .grp{display:inline-block; margin-top:8px; font-size:.85rem; font-weight:700; color:var(--pen)}
+.verbhead .tip{grid-column:1/-1; margin:0; padding:10px 12px; background:var(--amber-soft); border-radius:10px; color:var(--ink)}
+.verbhead .tip b{color:var(--amber)}
+.tools{display:flex; flex-direction:column; gap:8px; align-items:end}
+.toggle{display:flex; align-items:center; gap:8px; font-weight:700; font-size:.92rem; user-select:none}
+.toggle input{width:18px; height:18px; accent-color:var(--pen)}
+.mood{margin-top:22px}
+.mood > h3{font-size:1.15rem; margin-bottom:10px; display:flex; align-items:center; gap:10px}
+.mood > h3::after{content:""; flex:1; height:1px; background:var(--line)}
+.cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:12px}
+.card{background:var(--sheet); border:1px solid var(--line); border-radius:12px; padding:14px 14px 12px; min-width:0}
+.card .ch{display:flex; justify-content:space-between; align-items:start; gap:8px}
+.card h4{margin:0; font-family:var(--f-display); font-size:1.05rem}
+.card .rule{margin:4px 0 10px; font-size:.83rem; color:var(--muted); line-height:1.35}
+.card ul{list-style:none; margin:0; padding:0; display:grid; gap:3px}
+.card li{font-size:1.02rem}
+.pro{color:var(--muted)}
+.end{color:var(--pen); font-weight:700}
+.aux{color:var(--muted)}
+.extra{font-size:.85rem; color:var(--muted)}
+.none{color:var(--muted); font-style:italic; font-size:.92rem}
+.spk{border:1px solid var(--line); background:transparent; border-radius:8px; width:32px; height:32px; display:grid; place-items:center; flex:none}
+.spk svg{width:16px; height:16px}
+.hide li .f{background:var(--pen-soft); color:transparent; border-radius:4px; cursor:pointer; user-select:none}
+.hide li .f *{color:transparent}
+.hide li.shown .f{background:transparent; color:inherit; cursor:default}
+.hide li.shown .f .end{color:var(--pen)} .hide li.shown .f .aux{color:var(--muted)}
+
+/* --- Réviser & entraîner --- */
+.panel{background:var(--sheet); border:1px solid var(--line); border-radius:14px; padding:18px 20px; margin-top:18px}
+.row{display:flex; flex-wrap:wrap; gap:10px; align-items:end}
+.field{display:flex; flex-direction:column; gap:4px}
+select{font:inherit; padding:8px 10px; border-radius:9px; border:1.5px solid var(--line); background:var(--sheet); color:var(--ink); max-width:100%}
+.btn{border:0; background:var(--pen); color:var(--sheet); padding:10px 18px; border-radius:10px; font-weight:700}
+.btn.ghost{background:transparent; color:var(--pen); border:1.5px solid var(--pen)}
+.btn:disabled{opacity:.5; cursor:default}
+.fill{display:grid; gap:8px; margin-top:16px; max-width:560px}
+.fill .ln{display:grid; grid-template-columns:minmax(80px,auto) 1fr; align-items:center; gap:10px}
+.fill .ln .pro{text-align:right; font-size:1.05rem}
+.ans{font:inherit; font-size:1.08rem; padding:9px 11px; border-radius:9px; border:1.5px solid var(--line); background:var(--paper); color:var(--ink); width:100%; min-width:0}
+.ans.ok{border-color:var(--green); background:var(--green-soft)}
+.ans.ko{border-color:var(--red); background:var(--red-soft)}
+.ans.almost{border-color:var(--amber); background:var(--amber-soft)}
+.fix{grid-column:2; font-size:.92rem; margin-top:-4px}
+.fix.ko{color:var(--red)} .fix.almost{color:var(--amber)}
+.keys{display:flex; flex-wrap:wrap; gap:5px; margin-top:12px}
+.keys button{border:1px solid var(--line); background:var(--paper); border-radius:7px; min-width:36px; height:36px; font-size:1.05rem}
+.result{margin-top:14px; font-weight:700; font-size:1.05rem}
+
+.setup{display:grid; gap:16px}
+.setup .grp-row{display:grid; gap:6px}
+.setup .mini{display:flex; gap:8px; align-items:center}
+.setup .mini button{border:0; background:none; color:var(--pen); font-weight:700; font-size:.85rem; padding:0}
+.tensegrid{display:grid; gap:8px}
+.tensegrid .mg{display:flex; flex-wrap:wrap; gap:6px; align-items:center}
+.tensegrid .mg .label{min-width:96px}
+
+.q{margin-top:6px}
+.progress{height:6px; background:var(--line); border-radius:9px; overflow:hidden; margin-bottom:16px}
+.progress i{display:block; height:100%; background:var(--pen); width:0; transition:width .3s}
+.qmeta{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; color:var(--muted); font-weight:700; font-size:.9rem}
+.qverb{font-family:var(--f-display); font-size:clamp(1.8rem,5vw,2.4rem); font-weight:800; margin:6px 0 2px}
+.qtense{font-size:1.1rem; color:var(--pen); font-weight:700}
+.qline{display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-top:16px; font-size:1.2rem}
+.qline .ans{flex:1; min-width:180px; font-size:1.2rem}
+.fb{margin-top:14px; padding:12px 14px; border-radius:10px; font-size:1.02rem}
+.fb.ok{background:var(--green-soft); color:var(--green)}
+.fb.ko{background:var(--red-soft); color:var(--red)}
+.fb.almost{background:var(--amber-soft); color:var(--amber)}
+.fb .why{display:block; color:var(--ink); font-size:.92rem; margin-top:4px}
+.score{font-family:var(--f-display); font-size:3rem; font-weight:800; color:var(--pen); line-height:1}
+.errs{list-style:none; padding:0; margin:12px 0; display:grid; gap:6px}
+.errs li{padding:8px 12px; border-radius:9px; background:var(--red-soft)}
+.errs li s{color:var(--red)}
+.weak{display:grid; gap:6px; margin-top:8px}
+.weak div{display:flex; justify-content:space-between; gap:10px; padding:7px 10px; border-radius:9px; background:var(--paper); font-size:.93rem}
+.weak b{color:var(--red)}
+.hint{color:var(--muted); font-size:.9rem; margin:6px 0 0}
+@media (max-width:560px){ .verbhead{grid-template-columns:1fr} .tools{align-items:start} .tensegrid .mg .label{min-width:100%} }
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+.printbar{display:flex; flex-wrap:wrap; gap:8px}
+.btn.small{padding:7px 12px; font-size:.9rem}
+.home{display:inline-block; margin-bottom:6px; color:var(--pen); font-weight:700; text-decoration:none; font-size:.92rem}
+#print-area{display:none}
+@media print{
+  @page{size:A4; margin:12mm}
+  body{background:#fff !important; background-image:none !important; color:#000; font-size:9.5pt}
+  .wrap{display:none !important}
+  #print-area{display:block !important; font-family:var(--f-body); color:#000}
+  .pv{break-after:page}
+  .pv:last-child{break-after:auto}
+  .pv h2{font-family:var(--f-display); font-size:20pt; margin:0}
+  .pv .sub{margin:0 0 4pt; font-size:9pt; color:#444}
+  .pv .ptip{margin:0 0 8pt; padding:5pt 7pt; border:1px solid #999; border-radius:5pt; font-size:8.5pt}
+  .pgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:6pt 10pt}
+  .pgrid.two{grid-template-columns:repeat(2,1fr); gap:10pt 16pt}
+  .pb{break-inside:avoid; border-top:1.5px solid #000; padding-top:3pt}
+  .pb h4{margin:0 0 2pt; font-size:9.5pt; font-family:var(--f-display)}
+  .pb ul{list-style:none; margin:0; padding:0}
+  .pb li{line-height:1.35}
+  .pb .end{color:#000; font-weight:700; text-decoration:underline}
+  .pb .aux,.pb .pro{color:#555}
+  .pb .blank{display:inline-block; width:60%; border-bottom:1px solid #000; height:1.1em; vertical-align:bottom}
+  .pb.ex li{line-height:1.75}
+  .pname{float:right; font-size:9pt}
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <a class="home" id="home-link" href="index.html" hidden>← FrançaisPro</a>
+      <h1>Atelier <span>conjugaison</span></h1>
+      <p>11 verbes · 18 temps · apprendre, réviser, s'entraîner</p>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button id="tab-learn" role="tab" aria-selected="true" data-v="learn">Apprendre</button>
+      <button id="tab-revise" role="tab" aria-selected="false" data-v="revise">Réviser</button>
+      <button id="tab-train" role="tab" aria-selected="false" data-v="train">S'entraîner</button>
+    </nav>
+  </header>
+
+  <section id="v-learn">
+    <div class="chips" id="learn-verbs"></div>
+    <div id="learn-body"></div>
+  </section>
+
+  <section id="v-revise" hidden>
+    <div class="panel">
+      <h2 style="font-size:1.4rem">Tableau à trous</h2>
+      <p class="hint">Remplis toutes les personnes, puis vérifie. Les erreurs sont corrigées en rouge.</p>
+      <div class="row" style="margin-top:12px">
+        <div class="field"><label class="label" for="rv-verb">Verbe</label><select id="rv-verb"></select></div>
+        <div class="field"><label class="label" for="rv-tense">Temps</label><select id="rv-tense"></select></div>
+        <button class="btn ghost" id="rv-rand">Au hasard</button>
+      </div>
+      <div class="fill" id="rv-fill"></div>
+      <div class="keys" id="rv-keys"></div>
+      <div class="row" style="margin-top:14px"><button class="btn" id="rv-check">Vérifier</button><button class="btn ghost" id="rv-next">Tableau suivant</button><button class="btn ghost can-print" id="rv-print">Imprimer une fiche d'exercices</button></div>
+      <p class="hint can-print">La fiche donne 10 tableaux à trous au hasard, avec le corrigé sur la 2e page.</p>
+      <div class="result" id="rv-result"></div>
+    </div>
+  </section>
+
+  <section id="v-train" hidden>
+    <div class="panel" id="tr-setup">
+      <h2 style="font-size:1.4rem">Interro</h2>
+      <p class="hint">Choisis tes verbes et tes temps. On te pose des questions au hasard, tu écris la forme.</p>
+      <div class="setup" style="margin-top:14px">
+        <div class="grp-row">
+          <div class="mini"><span class="label">Verbes</span><button id="tr-allv">tout</button><button id="tr-nov">rien</button></div>
+          <div class="chips" id="tr-verbs"></div>
+        </div>
+        <div class="grp-row">
+          <div class="mini"><span class="label">Temps</span><button id="tr-allt">tout</button><button id="tr-not">rien</button></div>
+          <div class="tensegrid" id="tr-tenses"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label class="label" for="tr-n">Questions</label>
+            <select id="tr-n"><option>10</option><option selected>20</option><option>30</option><option>50</option></select></div>
+          <button class="btn" id="tr-start">Commencer</button>
+          <button class="btn ghost" id="tr-weakgo" hidden>Travailler mes points faibles</button>
+        </div>
+        <div id="tr-weak"></div>
+      </div>
+    </div>
+    <div class="panel q" id="tr-q" hidden></div>
+  </section>
+</div>
+<div id="print-area"></div>
+
+<script id="conj-data">
+/* ====== DONNÉES — vérifiées forme par forme ====== */
+const AV = { // auxiliaire avoir
+  present:['ai','as','a','avons','avez','ont'],
+  imparfait:['avais','avais','avait','avions','aviez','avaient'],
+  ps:['eus','eus','eut','eûmes','eûtes','eurent'],
+  futur:['aurai','auras','aura','aurons','aurez','auront'],
+  cond:['aurais','aurais','aurait','aurions','auriez','auraient'],
+  subj:['aie','aies','ait','ayons','ayez','aient'],
+  imp:['aie','ayons','ayez']
+};
+const _ = null;
+const V = {
+  apprecier:{inf:'apprécier', groupe:'1er groupe', pp:'apprécié', ppr:'appréciant', agree:true,
+    present:['apprécie','apprécies','apprécie','apprécions','appréciez','apprécient'],
+    imparfait:['appréciais','appréciais','appréciait','appréciions','appréciiez','appréciaient'],
+    ps:['appréciai','apprécias','apprécia','appréciâmes','appréciâtes','apprécièrent'],
+    futur:['apprécierai','apprécieras','appréciera','apprécierons','apprécierez','apprécieront'],
+    cond:['apprécierais','apprécierais','apprécierait','apprécierions','apprécieriez','apprécieraient'],
+    subj:['apprécie','apprécies','apprécie','appréciions','appréciiez','apprécient'],
+    imp:['apprécie','apprécions','appréciez'],
+    tip:'<b>Piège des deux i :</b> le radical finit par <i>i</i> (appréci-). À l\'imparfait et au subjonctif présent, on écrit <b>nous appréciions, vous appréciiez</b>. Au futur, le <i>e</i> reste même s\'il ne s\'entend pas : j\'apprécierai.'},
+  crier:{inf:'crier', groupe:'1er groupe', pp:'crié', ppr:'criant', agree:true,
+    present:['crie','cries','crie','crions','criez','crient'],
+    imparfait:['criais','criais','criait','criions','criiez','criaient'],
+    ps:['criai','crias','cria','criâmes','criâtes','crièrent'],
+    futur:['crierai','crieras','criera','crierons','crierez','crieront'],
+    cond:['crierais','crierais','crierait','crierions','crieriez','crieraient'],
+    subj:['crie','cries','crie','criions','criiez','crient'],
+    imp:['crie','crions','criez'],
+    tip:'<b>Piège des deux i :</b> nous <b>criions</b>, vous <b>criiez</b> (imparfait et subjonctif présent). Au futur, garde le <i>e</i> : je crierai. Impératif sans s : <b>crie !</b>'},
+  oublier:{inf:'oublier', groupe:'1er groupe', pp:'oublié', ppr:'oubliant', agree:true,
+    present:['oublie','oublies','oublie','oublions','oubliez','oublient'],
+    imparfait:['oubliais','oubliais','oubliait','oubliions','oubliiez','oubliaient'],
+    ps:['oubliai','oublias','oublia','oubliâmes','oubliâtes','oublièrent'],
+    futur:['oublierai','oublieras','oubliera','oublierons','oublierez','oublieront'],
+    cond:['oublierais','oublierais','oublierait','oublierions','oublieriez','oublieraient'],
+    subj:['oublie','oublies','oublie','oubliions','oubliiez','oublient'],
+    imp:['oublie','oublions','oubliez'],
+    tip:'<b>Piège des deux i :</b> nous <b>oubliions</b>, vous <b>oubliiez</b> (imparfait et subjonctif présent). <i>Je</i> devient <b>j\'</b> : j\'oublie, j\'ai oublié.'},
+  peler:{inf:'peler', groupe:'1er groupe', pp:'pelé', ppr:'pelant', agree:true,
+    present:['pèle','pèles','pèle','pelons','pelez','pèlent'],
+    imparfait:['pelais','pelais','pelait','pelions','peliez','pelaient'],
+    ps:['pelai','pelas','pela','pelâmes','pelâtes','pelèrent'],
+    futur:['pèlerai','pèleras','pèlera','pèlerons','pèlerez','pèleront'],
+    cond:['pèlerais','pèlerais','pèlerait','pèlerions','pèleriez','pèleraient'],
+    subj:['pèle','pèles','pèle','pelions','peliez','pèlent'],
+    imp:['pèle','pelons','pelez'],
+    tip:'<b>Accent grave, jamais deux l :</b> on met <b>è</b> quand la syllabe d\'après est muette : je <b>pèle</b>, ils <b>pèlent</b>, je <b>pèlerai</b>. Mais nous <b>pelons</b>, vous <b>pelez</b>, je <b>pelais</b> (sans accent).'},
+  courir:{inf:'courir', groupe:'3e groupe', pp:'couru', ppr:'courant', agree:true,
+    present:['cours','cours','court','courons','courez','courent'],
+    imparfait:['courais','courais','courait','courions','couriez','couraient'],
+    ps:['courus','courus','courut','courûmes','courûtes','coururent'],
+    futur:['courrai','courras','courra','courrons','courrez','courront'],
+    cond:['courrais','courrais','courrait','courrions','courriez','courraient'],
+    subj:['coure','coures','coure','courions','couriez','courent'],
+    imp:['cours','courons','courez'],
+    tip:'<b>Deux r</b> au futur et au conditionnel : je <b>courrai</b>, je <b>courrais</b>. Un seul r ailleurs : je courais (imparfait). Passé simple en <b>-us</b> : je courus.'},
+  savoir:{inf:'savoir', groupe:'3e groupe', pp:'su', ppr:'sachant', agree:true,
+    present:['sais','sais','sait','savons','savez','savent'],
+    imparfait:['savais','savais','savait','savions','saviez','savaient'],
+    ps:['sus','sus','sut','sûmes','sûtes','surent'],
+    futur:['saurai','sauras','saura','saurons','saurez','sauront'],
+    cond:['saurais','saurais','saurait','saurions','sauriez','sauraient'],
+    subj:['sache','saches','sache','sachions','sachiez','sachent'],
+    imp:['sache','sachons','sachez'],
+    tip:'<b>Le radical change beaucoup :</b> sai- / sav- / sau- (futur) / sach- (subjonctif, impératif, participe présent). Impératif : <b>sache, sachons, sachez</b>. Participe présent : <b>sachant</b>. Participe passé : <b>su</b>.'},
+  finir:{inf:'finir', groupe:'2e groupe', pp:'fini', ppr:'finissant', agree:true,
+    present:['finis','finis','finit','finissons','finissez','finissent'],
+    imparfait:['finissais','finissais','finissait','finissions','finissiez','finissaient'],
+    ps:['finis','finis','finit','finîmes','finîtes','finirent'],
+    futur:['finirai','finiras','finira','finirons','finirez','finiront'],
+    cond:['finirais','finirais','finirait','finirions','finiriez','finiraient'],
+    subj:['finisse','finisses','finisse','finissions','finissiez','finissent'],
+    imp:['finis','finissons','finissez'],
+    tip:'<b>2e groupe = -iss- :</b> nous fin<b>iss</b>ons, je fin<b>iss</b>ais, que je fin<b>iss</b>e, fin<b>iss</b>ant. Au singulier du présent et du passé simple, c\'est pareil : je finis. Participe passé <b>fini</b> (sans t ni s).'},
+  agir:{inf:'agir', groupe:'2e groupe', pp:'agi', ppr:'agissant', agree:false,
+    present:['agis','agis','agit','agissons','agissez','agissent'],
+    imparfait:['agissais','agissais','agissait','agissions','agissiez','agissaient'],
+    ps:['agis','agis','agit','agîmes','agîtes','agirent'],
+    futur:['agirai','agiras','agira','agirons','agirez','agiront'],
+    cond:['agirais','agirais','agirait','agirions','agiriez','agiraient'],
+    subj:['agisse','agisses','agisse','agissions','agissiez','agissent'],
+    imp:['agis','agissons','agissez'],
+    tip:'<b>Comme finir :</b> nous ag<b>iss</b>ons, j\'ag<b>iss</b>ais, que j\'ag<b>iss</b>e. <i>Je</i> devient <b>j\'</b> : j\'agis. Participe passé <b>agi</b> (il ne s\'accorde jamais).'},
+  voir:{inf:'voir', groupe:'3e groupe', pp:'vu', ppr:'voyant', agree:true,
+    present:['vois','vois','voit','voyons','voyez','voient'],
+    imparfait:['voyais','voyais','voyait','voyions','voyiez','voyaient'],
+    ps:['vis','vis','vit','vîmes','vîtes','virent'],
+    futur:['verrai','verras','verra','verrons','verrez','verront'],
+    cond:['verrais','verrais','verrait','verrions','verriez','verraient'],
+    subj:['voie','voies','voie','voyions','voyiez','voient'],
+    imp:['vois','voyons','voyez'],
+    tip:'<b>i ou y ?</b> On écrit <b>y</b> devant un son qu\'on entend : nous voyons, je voyais. On écrit <b>i</b> devant un e muet : ils voient, que je voie. Nous <b>voyions</b> (imparfait, avec y + i). Futur : je <b>verrai</b> (deux r). Passé simple : je <b>vis</b>.'},
+  envoyer:{inf:'envoyer', groupe:'1er groupe', pp:'envoyé', ppr:'envoyant', agree:true,
+    present:['envoie','envoies','envoie','envoyons','envoyez','envoient'],
+    imparfait:['envoyais','envoyais','envoyait','envoyions','envoyiez','envoyaient'],
+    ps:['envoyai','envoyas','envoya','envoyâmes','envoyâtes','envoyèrent'],
+    futur:['enverrai','enverras','enverra','enverrons','enverrez','enverront'],
+    cond:['enverrais','enverrais','enverrait','enverrions','enverriez','enverraient'],
+    subj:['envoie','envoies','envoie','envoyions','envoyiez','envoient'],
+    imp:['envoie','envoyons','envoyez'],
+    tip:'<b>Futur spécial :</b> j\'<b>enverrai</b>, j\'<b>enverrais</b> (comme voir → verrai). <b>y → i</b> devant un e muet : j\'envoie, ils envoient. Nous <b>envoyions</b> (imparfait). Impératif sans s : <b>envoie !</b>'},
+  falloir:{inf:'falloir', groupe:'3e groupe', pp:'fallu', ppr:_, impersonal:true, agree:false,
+    present:[_,_,'faut',_,_,_],
+    imparfait:[_,_,'fallait',_,_,_],
+    ps:[_,_,'fallut',_,_,_],
+    futur:[_,_,'faudra',_,_,_],
+    cond:[_,_,'faudrait',_,_,_],
+    subj:[_,_,'faille',_,_,_],
+    imp:_,
+    tip:'<b>Verbe impersonnel :</b> seulement avec <b>il</b> (il faut, il fallait, il faudra, qu\'il faille). Pas d\'impératif, pas de participe présent. Participe passé <b>fallu</b>, invariable.'}
+};
+const ORDER = ['apprecier','crier','oublier','peler','courir','savoir','finir','agir','voir','envoyer','falloir'];
+const MOODS = ['Indicatif','Conditionnel','Subjonctif','Impératif','Infinitif','Participe'];
+const PL = ' + participe passé';
+const TENSES = [
+  {id:'present', mood:'Indicatif', label:'Présent', kind:'p', simple:'present', rule:'1er groupe : -e, -es, -e, -ons, -ez, -ent · 2e groupe : -is, -is, -it, -issons… · 3e groupe : souvent -s, -s, -t.'},
+  {id:'pc', mood:'Indicatif', label:'Passé composé', kind:'p', aux:'present', rule:'avoir au présent'+PL},
+  {id:'imparfait', mood:'Indicatif', label:'Imparfait', kind:'p', simple:'imparfait', rule:'radical de « nous » au présent + -ais, -ais, -ait, -ions, -iez, -aient'},
+  {id:'pqp', mood:'Indicatif', label:'Plus-que-parfait', kind:'p', aux:'imparfait', rule:'avoir à l\'imparfait'+PL},
+  {id:'ps', mood:'Indicatif', label:'Passé simple', kind:'p', simple:'ps', rule:'1er groupe : -ai, -as, -a, -âmes, -âtes, -èrent · sinon -is… ou -us…'},
+  {id:'pa', mood:'Indicatif', label:'Passé antérieur', kind:'p', aux:'ps', rule:'avoir au passé simple'+PL},
+  {id:'fs', mood:'Indicatif', label:'Futur simple', kind:'p', simple:'futur', rule:'radical du futur + -ai, -as, -a, -ons, -ez, -ont (on entend toujours un r)'},
+  {id:'fa', mood:'Indicatif', label:'Futur antérieur', kind:'p', aux:'futur', rule:'avoir au futur simple'+PL},
+  {id:'cp', mood:'Conditionnel', label:'Présent', kind:'p', simple:'cond', rule:'radical du futur + terminaisons de l\'imparfait : -rais, -rais, -rait, -rions, -riez, -raient'},
+  {id:'cpa', mood:'Conditionnel', label:'Passé', kind:'p', aux:'cond', rule:'avoir au conditionnel présent'+PL},
+  {id:'sp', mood:'Subjonctif', label:'Présent', kind:'p', simple:'subj', que:true, rule:'que + radical de « ils » au présent + -e, -es, -e, -ions, -iez, -ent'},
+  {id:'spa', mood:'Subjonctif', label:'Passé', kind:'p', aux:'subj', que:true, rule:'avoir au subjonctif présent'+PL},
+  {id:'ip', mood:'Impératif', label:'Présent', kind:'imp', simple:'imp', rule:'3 personnes, sans pronom. Verbes en -er : pas de s à la 2e personne (crie !).'},
+  {id:'ipa', mood:'Impératif', label:'Passé', kind:'imp', aux:'imp', rule:'aie, ayons, ayez'+PL},
+  {id:'infp', mood:'Infinitif', label:'Présent', kind:'s', rule:'le nom du verbe'},
+  {id:'infpa', mood:'Infinitif', label:'Passé', kind:'s', rule:'avoir'+PL},
+  {id:'partp', mood:'Participe', label:'Présent', kind:'s', rule:'radical de « nous » au présent + -ant (sauf savoir : sachant)'},
+  {id:'partpa', mood:'Participe', label:'Passé', kind:'s', rule:'forme simple · forme composée : ayant'+PL}
+];
+const TBYID = Object.fromEntries(TENSES.map(t=>[t.id,t]));
+function tenseName(t){ return t.mood==='Indicatif' ? t.label : t.mood+' '+t.label.toLowerCase(); }
+const PERS = ['je','tu','il/elle','nous','vous','ils/elles'];
+const PERS_LONG = ['1re pers. du singulier','2e pers. du singulier','3e pers. du singulier','1re pers. du pluriel','2e pers. du pluriel','3e pers. du pluriel'];
+const IMP_P = [1,3,4];
+function elides(w){ return /^[aeiouyhâàäéèêëîïôöûùü]/i.test(w); }
+
+/* Toutes les lignes d'un temps pour un verbe : [{p, form, accept, extra}] */
+function rows(vk, tid){
+  const v = V[vk], t = TBYID[tid], out = [];
+  if(t.kind==='p'){
+    const ps = v.impersonal ? [2] : [0,1,2,3,4,5];
+    for(const p of ps){ const form = t.simple ? v[t.simple][p] : AV[t.aux][p]+' '+v.pp; out.push({p, form, accept:[form]}); }
+  } else if(t.kind==='imp'){
+    if(!v.imp) return out;
+    IMP_P.forEach((p,i)=>{ const form = t.simple ? v.imp[i] : AV.imp[i]+' '+v.pp; out.push({p, form, accept:[form]}); });
+  } else {
+    if(tid==='infp') out.push({p:-1, form:v.inf, accept:[v.inf]});
+    if(tid==='infpa') out.push({p:-1, form:'avoir '+v.pp, accept:['avoir '+v.pp]});
+    if(tid==='partp' && v.ppr) out.push({p:-1, form:v.ppr, accept:[v.ppr]});
+    if(tid==='partpa') out.push({p:-1, form:v.pp, accept:[v.pp,'ayant '+v.pp], extra:'ayant '+v.pp+(v.impersonal?' · invariable':'')});
+  }
+  return out;
+}
+function pronoun(vk, tid, p, form){
+  const t = TBYID[tid];
+  if(p<0 || t.kind==='imp') return '';
+  const v = V[vk];
+  let base = v.impersonal ? 'il' : PERS[p];
+  if(p===0 && elides(form)) base = "j'";
+  if(t.que){
+    if(p===2 || p===5) return "qu'"+base+' ';
+    return 'que '+base+(base.endsWith("'")?'':' ');
+  }
+  return base.endsWith("'") ? base : base+' ';
+}
+function fullLine(vk,tid,r){ return (pronoun(vk,tid,r.p,r.form)+r.form).replace(/ $/,''); }
+
+/* Repérer la terminaison pour la colorer */
+const END = {
+  present:[['e','s','x'],['es','s','x'],['e','t','d'],['ons'],['ez'],['ent']],
+  imparfait:[['ais'],['ais'],['ait'],['ions'],['iez'],['aient']],
+  ps:[['ai','is','us'],['as','is','us'],['a','it','ut'],['âmes','îmes','ûmes'],['âtes','îtes','ûtes'],['èrent','irent','urent']],
+  futur:[['rai'],['ras'],['ra'],['rons'],['rez'],['ront']],
+  cond:[['rais'],['rais'],['rait'],['rions'],['riez'],['raient']],
+  subj:[['e'],['es'],['e'],['ions'],['iez'],['ent']],
+  imp:{1:['e','s'],3:['ons'],4:['ez']}
+};
+function splitEnding(simple, p, form){
+  const list = simple==='imp' ? END.imp[p] : END[simple][p];
+  let best='';
+  for(const e of list) if(form.endsWith(e) && e.length>best.length && form.length>e.length) best=e;
+  return [form.slice(0, form.length-best.length), best];
+}
+
+/* Correction */
+function norm(s){
+  return s.toLowerCase().replace(/[’‘`´]/g,"'").replace(/[!.?,;]+/g,' ').replace(/\s+/g,' ').trim()
+    .replace(/^(que |qu')?(j'|je |tu |il\/elle |ils\/elles |il |elle |on |nous |vous |ils |elles )/, '').trim();
+}
+function bare(s){ return s.normalize('NFD').replace(/[̀-ͯ]/g,''); }
+function grade(input, accept){
+  const n = norm(input);
+  if(!n) return 'empty';
+  if(accept.some(a=>norm(a)===n)) return 'ok';
+  if(accept.some(a=>bare(norm(a))===bare(n))) return 'almost';
+  return 'ko';
+}
+if(typeof module!=='undefined') module.exports = {V, AV, ORDER, TENSES, rows, pronoun, fullLine, splitEnding, grade, tenseName};
+</script>
+
+<script>
+/* ====== INTERFACE ====== */
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const store = {
+  get(k,d){ try{ const v = localStorage.getItem('conj11-'+k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem('conj11-'+k, JSON.stringify(v)); }catch(e){} }
+};
+const SPK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+
+/* --- voix : Amélie, puis Audrey, puis Thomas, puis une voix française --- */
+let voice = null;
+function pickVoice(){
+  const vs = (window.speechSynthesis && speechSynthesis.getVoices()) || [];
+  for(const name of ['Amélie','Amelie','Audrey','Thomas']){ const f = vs.find(v=>v.name.includes(name)); if(f){ voice=f; return; } }
+  voice = vs.find(v=>/^fr/i.test(v.lang)) || null;
+}
+if(window.speechSynthesis){ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+function say(text){
+  if(!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text.replace(/il\/elle/g,'il').replace(/ils\/elles/g,'ils'));
+  u.lang = 'fr-FR'; if(voice) u.voice = voice; u.rate = .9;
+  speechSynthesis.speak(u);
+}
+
+/* --- onglets --- */
+document.querySelectorAll('nav.tabs button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.v)));
+function show(v){
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.setAttribute('aria-selected', b.dataset.v===v));
+  ['learn','revise','train'].forEach(x=>$('#v-'+x).hidden = x!==v);
+  store.set('tab', v);
+  if(v==='train') renderWeak();
+}
+
+/* ====== APPRENDRE ====== */
+let learnVerb = store.get('learnVerb','apprecier'); if(!V[learnVerb]) learnVerb='apprecier';
+let hideMode = false;
+function renderLearnChips(){
+  $('#learn-verbs').innerHTML = ORDER.map(k=>`<button class="chip" aria-pressed="${k===learnVerb}" data-k="${k}">${V[k].inf}</button>`).join('');
+  $('#learn-verbs').querySelectorAll('button').forEach(b=>b.onclick=()=>{ learnVerb=b.dataset.k; store.set('learnVerb',learnVerb); renderLearnChips(); renderLearn(); });
+}
+function formHTML(t, r){
+  if(t.simple){ const [s,e] = splitEnding(t.simple, r.p, r.form); return esc(s)+(e?`<span class="end">${esc(e)}</span>`:''); }
+  if(t.aux){ const i = r.form.indexOf(' '); return `<span class="aux">${esc(r.form.slice(0,i))}</span> <span class="end">${esc(r.form.slice(i+1))}</span>`; }
+  return esc(r.form);
+}
+function renderLearn(){
+  const v = V[learnVerb];
+  let h = `<div class="verbhead"><div><h2>${v.inf}</h2><span class="grp">${v.groupe} · auxiliaire avoir</span></div>
+    <div class="tools"><label class="toggle"><input type="checkbox" id="hide-t" ${hideMode?'checked':''}> Cacher les réponses</label>
+    <span class="hint" style="margin:0">Caché : touche une ligne pour la voir.</span>
+    <div class="printbar can-print"><button class="btn ghost small" id="pr-one">Imprimer ce verbe</button><button class="btn ghost small" id="pr-all">Imprimer les 11 verbes</button></div></div>
+    <p class="tip">${v.tip}</p></div>`;
+  for(const m of MOODS){
+    const ts = TENSES.filter(t=>t.mood===m);
+    h += `<div class="mood"><h3>${m}</h3><div class="cards">`;
+    for(const t of ts){
+      const rs = rows(learnVerb, t.id);
+      h += `<div class="card${hideMode?' hide':''}"><div class="ch"><h4>${t.mood==='Indicatif'?t.label:t.label}</h4>`+
+        (rs.length?`<button class="spk" aria-label="Écouter ${esc(tenseName(t))}" data-t="${t.id}">${SPK}</button>`:'')+`</div>
+        <p class="rule">${esc(t.rule)}</p>`;
+      if(!rs.length) h += `<p class="none">n'existe pas pour ce verbe</p>`;
+      else h += '<ul>'+rs.map(r=>`<li><span class="pro">${esc(pronoun(learnVerb,t.id,r.p,r.form))}</span><span class="f">${formHTML(t,r)}</span>${r.extra?`<div class="extra">${esc(r.extra)}</div>`:''}</li>`).join('')+'</ul>';
+      h += '</div>';
+    }
+    h += '</div></div>';
+  }
+  $('#learn-body').innerHTML = h;
+  $('#hide-t').onchange = e=>{ hideMode = e.target.checked; renderLearn(); };
+  $('#learn-body').querySelectorAll('.spk').forEach(b=>b.onclick=()=>{
+    say(rows(learnVerb,b.dataset.t).map(r=>fullLine(learnVerb,b.dataset.t,r)).join(' ; '));
+  });
+  $('#learn-body').querySelectorAll('.hide li').forEach(li=>li.onclick=()=>li.classList.add('shown'));
+  $('#pr-one').onclick = ()=>printNow(verbSheet(learnVerb));
+  $('#pr-all').onclick = ()=>printNow(ORDER.map(verbSheet).join(''));
+  applyPrintable();
+}
+
+/* ====== IMPRESSION ====== */
+const IN_FRAME = (()=>{ try{ return window.self!==window.top; }catch(e){ return true; } })();
+function applyPrintable(){ document.querySelectorAll('.can-print').forEach(el=>el.hidden = IN_FRAME); }
+function printNow(html){ $('#print-area').innerHTML = html; window.print(); }
+function blockName(t){ return t.mood==='Indicatif' ? t.label : tenseName(t); }
+function verbSheet(vk){
+  const v = V[vk];
+  let h = `<section class="pv"><span class="pname">Atelier conjugaison</span><h2>${v.inf}</h2><p class="sub">${v.groupe} · auxiliaire avoir</p><p class="ptip">${v.tip}</p><div class="pgrid">`;
+  for(const t of TENSES){
+    const rs = rows(vk,t.id);
+    h += `<div class="pb"><h4>${esc(blockName(t))}</h4>`+(rs.length ? '<ul>'+rs.map(r=>`<li><span class="pro">${esc(pronoun(vk,t.id,r.p,r.form))}</span>${formHTML(t,r)}${r.extra?` <span class="aux">· ${esc(r.extra)}</span>`:''}</li>`).join('')+'</ul>' : '<ul><li class="pro">n\'existe pas</li></ul>')+'</div>';
+  }
+  return h+'</div></section>';
+}
+function exerciseSheet(){
+  const all = []; for(const vk of ORDER) for(const t of TENSES) if(rows(vk,t.id).length>1) all.push([vk,t.id]);
+  const pick = shuffle(all).slice(0,10);
+  const block = (ex)=>pick.map(([vk,tid])=>{
+    const t = TBYID[tid];
+    return `<div class="pb${ex?' ex':''}"><h4>${V[vk].inf} · ${esc(tenseName(t))}</h4><ul>`+rows(vk,tid).map(r=>{
+      let pro = pronoun(vk,tid,r.p,r.form); if(ex && pro.endsWith("j'")) pro = pro.replace("j'","je/j' ");
+      if(!pro && t.kind==='imp') pro = '('+PERS[r.p]+') ';
+      return `<li><span class="pro">${esc(pro)}</span>${ex?'<span class="blank"></span>':formHTML(t,r)}</li>`;
+    }).join('')+'</ul></div>';
+  }).join('');
+  return `<section class="pv"><span class="pname">Nom : ____________________</span><h2>Exercices de conjugaison</h2><p class="sub">Conjugue chaque verbe au temps demandé.</p><div class="pgrid two">${block(true)}</div></section>`+
+    `<section class="pv"><span class="pname">Atelier conjugaison</span><h2>Corrigé</h2><p class="sub">&nbsp;</p><div class="pgrid two">${block(false)}</div></section>`;
+}
+
+/* ====== CLAVIER D'ACCENTS ====== */
+let lastInput = null;
+document.addEventListener('focusin', e=>{ if(e.target.classList && e.target.classList.contains('ans')) lastInput = e.target; });
+function keysHTML(){ return ['é','è','ê','à','â','î','ï','ô','û','ù','ç','ë',"'"].map(c=>`<button type="button" data-c="${c}" aria-label="insérer ${c}">${c}</button>`).join(''); }
+function wireKeys(el){
+  el.innerHTML = keysHTML();
+  el.querySelectorAll('button').forEach(b=>{
+    b.addEventListener('mousedown', e=>e.preventDefault());
+    b.addEventListener('click', ()=>{
+      const inp = lastInput; if(!inp || inp.disabled || !document.body.contains(inp)) return;
+      const s = inp.selectionStart ?? inp.value.length, e2 = inp.selectionEnd ?? inp.value.length;
+      inp.value = inp.value.slice(0,s)+b.dataset.c+inp.value.slice(e2);
+      inp.focus(); inp.setSelectionRange(s+1,s+1);
+    });
+  });
+}
+
+/* ====== STATISTIQUES (points faibles) ====== */
+let stats = store.get('stats', {});
+function record(vk, tid, ok){
+  const k = vk+'|'+tid; const s = stats[k] || {ok:0, ko:0};
+  ok ? s.ok++ : s.ko++; stats[k]=s; store.set('stats', stats);
+}
+function weakList(){
+  return Object.entries(stats).filter(([k,s])=>s.ko>0 && V[k.split('|')[0]] && TBYID[k.split('|')[1]])
+    .map(([k,s])=>({k, ...s, rate:s.ko/(s.ok+s.ko)})).sort((a,b)=>b.rate-a.rate || b.ko-a.ko).slice(0,6);
+}
+
+/* ====== RÉVISER (tableau à trous) ====== */
+function fillableTenses(vk){ return TENSES.filter(t=>rows(vk,t.id).length); }
+$('#rv-verb').innerHTML = ORDER.map(k=>`<option value="${k}">${V[k].inf}</option>`).join('');
+function fillTenseSelect(keep){
+  const vk = $('#rv-verb').value;
+  $('#rv-tense').innerHTML = fillableTenses(vk).map(t=>`<option value="${t.id}">${esc(tenseName(t))}</option>`).join('');
+  if(keep && rows(vk,keep).length) $('#rv-tense').value = keep;
+}
+function renderFill(){
+  const vk = $('#rv-verb').value, tid = $('#rv-tense').value;
+  const rs = rows(vk, tid);
+  $('#rv-fill').innerHTML = rs.map((r,i)=>{
+    const pro = pronoun(vk,tid,r.p,r.form) || (TBYID[tid].kind==='imp' ? '('+PERS[r.p]+')' : '→');
+    const ph = (pronoun(vk,tid,r.p,r.form).endsWith("'")) ? '' : '';
+    return `<div class="ln"><span class="pro">${esc(pro.replace("j'","je / j'"))}</span><input class="ans" id="rv-${i}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="${esc(pro)}"></div><div class="fix" id="rv-fix-${i}"></div>`;
+  }).join('');
+  $('#rv-result').textContent = '';
+  $('#rv-fill').querySelectorAll('.ans').forEach((inp,i,all)=>inp.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){ e.preventDefault(); if(all[i+1]) all[i+1].focus(); else checkFill(); }
+  }));
+}
+function checkFill(){
+  const vk = $('#rv-verb').value, tid = $('#rv-tense').value, rs = rows(vk,tid);
+  let good = 0;
+  rs.forEach((r,i)=>{
+    const inp = $('#rv-'+i), fix = $('#rv-fix-'+i), g = grade(inp.value, r.accept);
+    inp.classList.remove('ok','ko','almost');
+    fix.className = 'fix'; fix.textContent='';
+    if(g==='ok'){ inp.classList.add('ok'); good++; }
+    else { const c = g==='almost'?'almost':'ko'; inp.classList.add(c); fix.classList.add(c);
+      fix.textContent = (g==='almost'?'Attention aux accents : ':'Correct : ')+fullLine(vk,tid,r); }
+  });
+  record(vk, tid, good===rs.length);
+  $('#rv-result').textContent = good===rs.length ? `Parfait : ${good} sur ${rs.length} !` : `${good} sur ${rs.length} juste${good>1?'s':''}. Relis les corrections, puis réessaie.`;
+}
+function randomFill(){
+  const vk = ORDER[Math.floor(Math.random()*ORDER.length)];
+  $('#rv-verb').value = vk; fillTenseSelect();
+  const ts = fillableTenses(vk); $('#rv-tense').value = ts[Math.floor(Math.random()*ts.length)].id;
+  renderFill(); $('#rv-0') && $('#rv-0').focus();
+}
+$('#rv-verb').onchange = ()=>{ fillTenseSelect($('#rv-tense').value); renderFill(); };
+$('#rv-tense').onchange = renderFill;
+$('#rv-rand').onclick = randomFill; $('#rv-next').onclick = randomFill;
+$('#rv-check').onclick = checkFill;
+$('#rv-print').onclick = ()=>printNow(exerciseSheet());
+wireKeys($('#rv-keys'));
+
+/* ====== S'ENTRAÎNER ====== */
+let selV = new Set(store.get('selV', ORDER)), selT = new Set(store.get('selT', TENSES.map(t=>t.id)));
+function renderSetup(){
+  $('#tr-verbs').innerHTML = ORDER.map(k=>`<button class="chip" aria-pressed="${selV.has(k)}" data-k="${k}">${V[k].inf}</button>`).join('');
+  $('#tr-tenses').innerHTML = MOODS.map(m=>`<div class="mg"><span class="label">${m}</span>`+
+    TENSES.filter(t=>t.mood===m).map(t=>`<button class="chip" aria-pressed="${selT.has(t.id)}" data-t="${t.id}">${esc(t.label)}</button>`).join('')+'</div>').join('');
+  $('#tr-verbs').querySelectorAll('button').forEach(b=>b.onclick=()=>{ selV.has(b.dataset.k)?selV.delete(b.dataset.k):selV.add(b.dataset.k); saveSel(); });
+  $('#tr-tenses').querySelectorAll('button').forEach(b=>b.onclick=()=>{ selT.has(b.dataset.t)?selT.delete(b.dataset.t):selT.add(b.dataset.t); saveSel(); });
+  $('#tr-start').disabled = !buildPool([...selV],[...selT]).length;
+}
+function saveSel(){ store.set('selV',[...selV]); store.set('selT',[...selT]); renderSetup(); }
+$('#tr-allv').onclick=()=>{ selV=new Set(ORDER); saveSel(); };
+$('#tr-nov').onclick=()=>{ selV=new Set(); saveSel(); };
+$('#tr-allt').onclick=()=>{ selT=new Set(TENSES.map(t=>t.id)); saveSel(); };
+$('#tr-not').onclick=()=>{ selT=new Set(); saveSel(); };
+
+function buildPool(vs, ts){
+  const pool = [];
+  for(const vk of vs) for(const tid of ts) for(const r of rows(vk,tid)) pool.push({vk, tid, r});
+  return pool;
+}
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function pickSeries(pool, n){
+  // évite deux fois la même combinaison verbe+temps à la suite quand c'est possible
+  const s = shuffle(pool.slice()); const out = [];
+  while(out.length<n && s.length){ out.push(s.shift()); if(!s.length && out.length<n) s.push(...shuffle(pool.slice())); }
+  return out;
+}
+let quiz = null;
+function startQuiz(items){
+  quiz = {items, i:0, good:0, errors:[], answered:false};
+  $('#tr-setup').hidden = true; $('#tr-q').hidden = false; renderQ();
+}
+$('#tr-start').onclick = ()=>startQuiz(pickSeries(buildPool([...selV],[...selT]), +$('#tr-n').value));
+$('#tr-weakgo').onclick = ()=>{
+  const combos = weakList(); const pool = [];
+  for(const c of combos){ const [vk,tid]=c.k.split('|'); for(const r of rows(vk,tid)) pool.push({vk,tid,r}); }
+  if(pool.length) startQuiz(pickSeries(pool, Math.min(20, Math.max(10,pool.length))));
+};
+function renderWeak(){
+  const w = weakList();
+  $('#tr-weakgo').hidden = !w.length;
+  $('#tr-weak').innerHTML = w.length ? `<span class="label">Mes points faibles</span><div class="weak">`+
+    w.map(x=>{ const [vk,tid]=x.k.split('|'); return `<div><span>${V[vk].inf} · ${esc(tenseName(TBYID[tid]))}</span><span><b>${x.ko}</b> faute${x.ko>1?'s':''} · ${x.ok} juste${x.ok>1?'s':''}</span></div>`; }).join('')+'</div>' : '';
+}
+function qLabel(it){
+  const t = TBYID[it.tid];
+  if(t.kind==='imp') return PERS_LONG[it.r.p]+' ('+PERS[it.r.p]+')';
+  if(t.kind==='s') return t.id==='partpa' ? 'forme simple ou avec « ayant »' : '';
+  return V[it.vk].impersonal ? 'il (impersonnel)' : PERS_LONG[it.r.p];
+}
+function renderQ(){
+  const it = quiz.items[quiz.i], t = TBYID[it.tid], n = quiz.items.length;
+  let pro = pronoun(it.vk,it.tid,it.r.p,it.r.form);
+  if(pro==="j'" ) pro = "je / j'";
+  if(pro==="que j'") pro = "que je / j'";
+  $('#tr-q').innerHTML = `<div class="progress"><i style="width:${quiz.i/n*100}%"></i></div>
+    <div class="qmeta"><span>Question ${quiz.i+1} / ${n}</span><span>${quiz.good} juste${quiz.good>1?'s':''}</span></div>
+    <div class="qverb">${V[it.vk].inf}</div>
+    <div class="qtense">${esc(tenseName(t))}${qLabel(it)?` <span class="pro" style="font-weight:400">· ${esc(qLabel(it))}</span>`:''}</div>
+    <div class="qline">${pro?`<span class="pro">${esc(pro.trim())}</span>`:''}<input class="ans" id="tr-in" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="ta réponse"></div>
+    <div class="keys" id="tr-keys"></div>
+    <div id="tr-fb"></div>
+    <div class="row" style="margin-top:14px"><button class="btn" id="tr-go">Vérifier</button><button class="btn ghost" id="tr-quit">Arrêter</button></div>`;
+  wireKeys($('#tr-keys'));
+  quiz.answered = false;
+  const inp = $('#tr-in'); inp.focus();
+  inp.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); $('#tr-go').click(); } });
+  $('#tr-go').onclick = ()=>quiz.answered ? nextQ() : answerQ();
+  $('#tr-quit').onclick = endQuiz;
+}
+function answerQ(){
+  const it = quiz.items[quiz.i], inp = $('#tr-in'), g = grade(inp.value, it.r.accept);
+  if(g==='empty'){ inp.focus(); return; }
+  quiz.answered = true; inp.disabled = true;
+  const line = fullLine(it.vk,it.tid,it.r) + (it.r.extra && it.tid==='partpa' ? ' (ou '+it.r.extra.split(' · ')[0]+')' : '');
+  let html;
+  if(g==='ok'){ quiz.good++; inp.classList.add('ok'); html = `<div class="fb ok"><b>Juste !</b> ${esc(line)}</div>`; }
+  else {
+    inp.classList.add(g==='almost'?'almost':'ko');
+    quiz.errors.push({it, given:inp.value});
+    const tip = V[it.vk].tip.replace(/<[^>]+>/g,'');
+    html = `<div class="fb ${g==='almost'?'almost':'ko'}"><b>${g==='almost'?'Presque, regarde les accents.':'Pas tout à fait.'}</b> La bonne réponse : <b>${esc(line)}</b>
+      <span class="why">Règle : ${esc(TBYID[it.tid].rule)}</span><span class="why">${esc(tip)}</span></div>`;
+  }
+  record(it.vk, it.tid, g==='ok');
+  $('#tr-fb').innerHTML = html;
+  $('#tr-go').textContent = quiz.i+1<quiz.items.length ? 'Suivant' : 'Voir mon score';
+  $('#tr-go').focus();
+  say(fullLine(it.vk,it.tid,it.r));
+}
+function nextQ(){ quiz.i++; if(quiz.i<quiz.items.length) renderQ(); else endQuiz(); }
+function endQuiz(){
+  const n = quiz.answered ? quiz.i+1 : quiz.i;
+  const pct = n ? Math.round(quiz.good/n*100) : 0;
+  const msg = !n ? 'Aucune question faite.' : pct===100 ? 'Sans faute, bravo !' : pct>=80 ? 'Très bien, encore un petit effort.' : pct>=50 ? 'Pas mal. Refais tes erreurs pour les fixer.' : 'Retourne voir les fiches, puis refais tes erreurs.';
+  $('#tr-q').innerHTML = `<div class="score">${quiz.good} / ${n}</div><p style="font-weight:700;margin:6px 0 0">${msg}</p>`+
+    (quiz.errors.length ? `<span class="label" style="display:block;margin-top:16px">Mes erreurs</span><ul class="errs">`+
+      quiz.errors.map(e=>`<li>${esc(V[e.it.vk].inf)} · ${esc(tenseName(TBYID[e.it.tid]))} : <s>${esc(e.given)}</s> → <b>${esc(fullLine(e.it.vk,e.it.tid,e.it.r))}</b></li>`).join('')+'</ul>' : '')+
+    `<div class="row" style="margin-top:14px">${quiz.errors.length?'<button class="btn" id="tr-redo">Refaire mes erreurs</button>':''}<button class="btn ghost" id="tr-new">Nouvelle série</button></div>`;
+  const errs = quiz.errors.map(e=>e.it);
+  if(errs.length) $('#tr-redo').onclick = ()=>startQuiz(shuffle(errs.slice()));
+  $('#tr-new').onclick = ()=>{ $('#tr-q').hidden = true; $('#tr-setup').hidden = false; renderSetup(); renderWeak(); };
+}
+
+/* ====== DÉMARRAGE ====== */
+$('#home-link').hidden = IN_FRAME;
+renderLearnChips(); renderLearn();
+fillTenseSelect(); renderFill();
+renderSetup(); renderWeak();
+const startTab = store.get('tab','learn'); if(['learn','revise','train'].includes(startTab)) show(startTab);
+</script>
